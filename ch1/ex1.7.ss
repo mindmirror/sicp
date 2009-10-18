@@ -54,5 +54,20 @@
 ;; that are more than 0.001 away from the true square root.''. This is not the
 ;; case since the guess will be convergent to the real square root.
 
+(define (sqrt-iter-alt guess x)
+  (if (good-enough-alt guess x)
+      (improve guess x)
+      (sqrt-iter-alt (improve guess x) 
+                     x)))
 
+(define (good-enough-alt guess x)
+  (< (/ (abs (- (improve guess x) 
+                guess)) 
+        (improve guess x)) 
+     0.001))
+
+(define (sqrt-alt x)
+  (sqrt-iter-alt 1.0 x))
+
+;; It does work better
 
