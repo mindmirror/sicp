@@ -37,7 +37,8 @@
 
 ;; (f n) -> 0 when n = 0; 2n when n != 0
 ;; (g n) -> 2^n
-;; (h n) -> 2^(2^n)
+;; (h n) -> 2^(2^(2^(2^ ..... 2)...)
+;;          ...        n        ...
 
 ;; Verification
 (define (A x y)
