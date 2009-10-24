@@ -1,0 +1,17 @@
+In fact, it is not hard to show that the number of times the procedure will
+compute (fib 1) or (fib 0) (the number of leaves in the above tree, in general)
+is precisely Fib(n + 1).
+
+Fib(n) = Fib(n-1) + Fib(n-2)
+	   = Fib(n-2) + Fib(n-3) + Fib(n-2)
+	   = 2Fib(n-2) + Fib(n-3)   --------> Fib(3)*Fib(n-2) + Fib(2)*Fib(n-3)
+	   = 2Fib(n-3) + 2Fib(n-4) + Fib(n-3)
+	   = 3Fib(n-3) + 2Fib(n-4)  --------> Fib(4)*Fib(n-3) + Fib(3)*Fib(n-3)
+	   = 5Fib(n-4) + 3Fib(n-5)  --------> Fib(5)*Fib(n-4) + Fib(4)*Fib(n-5)
+	   = 8Fib(n-5) + 5Fib(n-6)  --------> Fib(6)*Fib(n-5) + Fib(5)*Fib(n-6)
+	   ...
+	   = Fib(n)*Fib(n-(n-1)) + Fib(n-1)*Fib(n-n)
+	   = Fib(n)*Fib(1) + Fib(n-1)*Fib(0)
+
+So there are Fib(n) number of Fib(1) leaves and Fib(n-1) number of Fib(0)
+leaves. The total number of leaves is Fib(n) + Fib(n-1) = Fib(n+1)
