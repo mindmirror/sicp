@@ -16,7 +16,7 @@
 ;; number of steps. 
 
 (define (fast-mul a b)
-  (cond ((= b 1) a)
+  (cond ((= b 0) 0)
         ((even? b) (double (fast-mul a (halve b))))
         (else (+ a (fast-mul a (- b 1))))))
 
@@ -25,3 +25,6 @@
 
 (define (halve n)
   (/ n 2))
+
+;; Note: the return condition should be b is equal to 0, not 1. Otherwise the 
+;; procedure will never end and run out of memeory.
