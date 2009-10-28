@@ -65,7 +65,6 @@
          (search-for-primes (+ n 2) (- r 1)))
         (else (search-for-primes (+ n 2) r))))
 
-(search-for-primes 10000000000000 3)
 ;; 1 billion, 1000^3
 (search-for-primes 1000000000 3)
 ;; 10 billion
