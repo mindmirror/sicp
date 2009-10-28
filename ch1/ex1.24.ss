@@ -49,13 +49,13 @@
 (timed-prime-test 1000000009)
 (timed-prime-test 1000000021)
 
-;; My machine is too fast to see any time cost on prime test. So I will do the 
+;; My machine is too fast to see any time cost on prime test. So I run the 
 ;; fast-prime? 1000 times before reporting it. Theoretically, test the primes
 ;; near 1,000,000 should be 2 times longer than the time needed to test primes
-;; near 1,000. And test the primes near 1,000,000 should be 3 times longer than
-;; primes near 1,000. The ratio on my machine is about 1 : 3.32 : 5.36. Although
-;; it is not so close to the theoretical ratio, it is still in a Theta(log n) 
-;; manner. I will figure this out later.
+;; near 1,000. And test the primes near 1,000,000,000 should be 3 times longer
+;; than primes near 1,000. The ratio on my machine is about 1 : 3.32 : 5.36.
+;; Although it is not so close to the theoretical ratio, it is still in a
+;; Theta(log n) manner. I will figure this out later.
 
 ;; Reference from code17 02/28/05
 ;; 分析:
