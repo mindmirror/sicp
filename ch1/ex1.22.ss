@@ -29,6 +29,7 @@
 ;; of steps required for the computation?
 
 ;; Using (current-milliseconds) instead of (runtime)
+;; (current-milliseconds) need `PrettyBig' to run
 (define (timed-prime-test n)
   (newline)
   (display n)
@@ -64,6 +65,7 @@
          (search-for-primes (+ n 2) (- r 1)))
         (else (search-for-primes (+ n 2) r))))
 
+(search-for-primes 10000000000000 3)
 ;; 1 billion, 1000^3
 (search-for-primes 1000000000 3)
 ;; 10 billion
@@ -95,8 +97,8 @@
 ;1000000000063 *** 1453
 ;done
 ;10000000000037 *** 4641
-;10000000000051 *** 4656
-;10000000000099 *** 5453
+;10000000000051 *** 4625
+;10000000000099 *** 4625
 ;done
 ;100000000000031 *** 14625
 ;100000000000067 *** 14656
