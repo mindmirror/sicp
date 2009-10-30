@@ -37,8 +37,25 @@
     (> (expmod a (- n 1) n) 0))
   (try-it (+ 1 (random (- n 1)))))
 
-(define (fast-prime? n times)
+(define (prime? n times)
   (cond ((= times 0) true)
-        ((fermat-test n) (fast-prime? n (- times 1)))
+        ((fermat-test n) (prime? n (- times 1)))
         (else false)))
 
+;; Test for primes
+(prime? 1009 10)
+(prime? 1013 10)
+(prime? 1019 10)
+(prime? 10007 10)
+(prime? 10009 10)
+(prime? 10037 10)
+(prime? 100003 10)
+(prime? 100033 10)
+(prime? 100037 10)
+;; Test for Carmichael numbers
+(prime? 561 10)
+(prime? 1105 10)
+(prime? 1729 10)
+(prime? 2465 10)
+(prime? 2821 10)
+(prime? 6601 10)
