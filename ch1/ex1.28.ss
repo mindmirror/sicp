@@ -37,3 +37,8 @@
     (> (expmod a (- n 1) n) 0))
   (try-it (+ 1 (random (- n 1)))))
 
+(define (fast-prime? n times)
+  (cond ((= times 0) true)
+        ((fermat-test n) (fast-prime? n (- times 1)))
+        (else false)))
+
