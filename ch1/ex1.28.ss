@@ -20,21 +20,23 @@
 
 (define (expmod base exp m)
   (cond ((= exp 0) 1)
-        ((even? exp) (if (nontrivial? (expmod base (/ exp 2) m) m)
-                         0
-                         (remainder (square (expmod base (/ exp 2) m)) m)))
+        ((even? exp) (nontrivial-check (expmod base (/ exp 2) m) m))
         (else (remainder (* base (expmod base (- exp 1) m)) m))))
 
-(define (nontrivial? a n)
-  (and (= 1 (remainder (square a) n))
-       (> a 1)
-       (< a (- n 1))))
+(define (nontrivial-check a n)
+  (define result
+    (remainder (square a) n))
+  (if (and (= result 1)
+           (not (or (= a 1)
+                    (= a (- n 1)))))
+      0 ; return 0 if it is nontrivial
+      result))
 
 (define (square x) (* x x))
 
 (define (fermat-test n)
   (define (try-it a)
-    (> (expmod a (- n 1) n) 0))
+    (= (expmod a (- n 1) n) 1))
   (try-it (+ 1 (random (- n 1)))))
 
 (define (prime? n times)
@@ -50,8 +52,8 @@
 (prime? 10009 10)
 (prime? 10037 10)
 (prime? 100003 10)
-(prime? 100033 10)
-(prime? 100037 10)
+(prime? 100019 10)
+(prime? 100043 10)
 ;; Test for Carmichael numbers
 (prime? 561 10)
 (prime? 1105 10)
