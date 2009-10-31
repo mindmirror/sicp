@@ -52,9 +52,3 @@
 ;; Test cases
 (sum-iter identity 1 inc 10)
 (product-iter identity 1 inc 5)
-
-
-
-
-
-
