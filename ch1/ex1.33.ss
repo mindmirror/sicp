@@ -26,7 +26,7 @@
                                     filter
                                     term (next a) next b))))
 
-;; prime? procedure
+;; a.
 (define (prime? n)
   (= (smallest-divisor n) n))
 (define (smallest-divisor n)
@@ -42,3 +42,9 @@
 (define (prime-sum a b)
   (define (inc x) (+ x 1))
   (filtered-accumulate + 0 prime? sqr a inc b))
+
+;; b.
+(define (r-prime-product n)
+  (define (inc x) (+ x 1))
+  (define (r-gcd? a) (gcd a n))
+  (filtered-accumulate * 1 r-gcd? identity 1 inc n))
