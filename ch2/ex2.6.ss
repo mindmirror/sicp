@@ -6,22 +6,52 @@
   (lambda (f) (lambda (x) (f ((n f) x)))))
 
 
-;; To make the subsitituion easier, let define zero as
-;; (define zero (lambda (s) (lambda (z) z)))
-;;
 ; (add-1 zero)
-; (lambda (f) (lambda (x) (f (((lambda (s) (lambda (z) z)) f) x)))) ;; Fix here
-; (lambda (f) (lambda (x) (f ((lambda (f) (lambda (z) z)) x))))
-; (lambda (f) (lambda (x) (f (lambda (x) (lambda (z) z)))))
-; (lambda (f) (lambda (x) (f zero)))
+; (lambda (f) (lambda (x) (f ((zero f) x))))
+; (lambda (f) (lambda (x) (f ((lambda (f) (lambda (x) x)) f)  x)))
+; (lambda (f) (lambda (x) (f ((lambda (x) x) x))))
+; (lambda (f) (lambda (x) (f x)))
 
-;; So let's define one
-(define one (lambda (s) (lambda (z) (s zero))))
+;; define one
+(define one (lambda (f) (lambda (x) (f x))))
 
 ; (add-1 one)
 ; (lambda (f) (lambda (x) (f ((one f) x))))
-; (lambda (f) (lambda (x) (f (lambda (z) (f zero)) x)))
-; (lambda (f) (lambda (x) (f (f zero))))
+; (lambda (f) (lambda (x) (f ((lambda (x) (f x)) x))))
+; (lambda (f) (lambda (x) (f (f x))))
 
 ;; define two
-(define two (lambda (s) (lambda (z) (s (s zero)))))
+(define two (lambda (f) (lambda (x) (f (f x)))))
+
+;; define n
+; (add-1 n-1)
+; (lambda (f) (lambda (x) (f ((n-1 f) x))))
+
+;; (one f)
+; ((lambda (f) (lambda (x) (f x))) f)
+; (lambda (x (f x)))
+
+;; (two f)
+; ((lambda (f) (lambda (x) (f (f x)))) f)
+; (lambda (x) (f (f x)))
+
+;; (a f)
+; (lambda (x) (f^a x))
+;; (b f)
+; (lambda (x) (f^b x))
+
+;; define `+' procedure
+(define (add a b)
+  (lambda (f) (lambda (x) ((a f) ((b f) x)))))
+
+;; church number to number
+(define (church-number-to-number church-number)
+  ((church-number (lambda (i) (+ i 1))) 0))
+
+(church-number-to-number two)
+
+;; number to chur number
+(define (number-to-church-number number)
+  (if (= number 0)
+      (lambda (f) (lambda (x) x))
+      (lambda (f) (lambda (x) (f ((number-to-church-number (- number 1)) x))))))
