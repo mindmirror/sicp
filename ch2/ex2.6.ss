@@ -41,7 +41,7 @@
 ; (lambda (x) (f^b x))
 
 ;; define `+' procedure
-(define (add a b)
+(define (add a b) ;; both a and b are church numerals
   (lambda (f) (lambda (x) ((a f) ((b f) x)))))
 
 ;; church number to number
@@ -50,8 +50,18 @@
 
 (church-number-to-number two)
 
-;; number to chur number
-(define (number-to-church-number number)
+;; number to church number
+(define (number-to-church-number number) ;; the return value should be a procedure
   (if (= number 0)
       (lambda (f) (lambda (x) x))
-      (lambda (f) (lambda (x) (f ((number-to-church-number (- number 1)) x))))))
+      (lambda (f) (lambda (x) (f (((number-to-church-number (- number 1)) f) x))))))
+
+;; a simpler version of number to church number
+(define (number-to-chumber number)
+  (if (= number 0)
+      zero
+      (add-1 (number-to-chumber (- number 1)))))
+
+;; test case
+(define nine (number-to-chumber 9))
+(church-number-to-number nine)
