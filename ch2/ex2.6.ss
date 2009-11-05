@@ -65,3 +65,7 @@
 ;; test case
 (define nine (number-to-chumber 9))
 (church-number-to-number nine)
+
+(define (inc n) (+ n 1))
+(define inc-nine (nine inc))
+(inc-nine 1)
