@@ -42,3 +42,12 @@ x
 y
 (deep-reverse-i y)
 (deep-reverse-r y)
+
+;; More elegant way from code17
+(define (deep-reverse items)
+  (if (pair? items)
+      (append (deep-reverse (cdr items))
+              (list (append (deep-reverse (car items)))))
+      items))
+
+(deep-reverse y)
