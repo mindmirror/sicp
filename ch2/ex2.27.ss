@@ -5,6 +5,7 @@
       null
       (append (reverse-r (cdr items)) (list (car items)))))
 
+;; Test case
 (reverse-r (list 1 2 3 4 5 6 7))
 
 (define (reverse-i items)
@@ -14,6 +15,7 @@
         (iter (cdr i) (cons (car i) result))))
   (iter items null))
 
+;; Test case
 (reverse-i (list 1 2 3 4 5 6 7))
 
 ;; deep-reverse
@@ -25,16 +27,20 @@
           (else (iter (cdr i) (cons (car i) result)))))
   (iter items null))
 
+;; Test case
 (define x (list (list 1 2) (list 3 4)))
 x
 (reverse-i x)
 (deep-reverse-i x)
 
+;; deep-reverse iterative
 (define (deep-reverse-r items)
   (cond ((null? items) null)
         ((pair? (car items)) (append (deep-reverse-r (cdr items))
                                      (list (deep-reverse-r (car items)))))
         (else (append (deep-reverse-r (cdr items)) (list (car items))))))
+
+;; Test case
 (deep-reverse-r x)
 
 ;; Test case from Pan Xingzhi
@@ -50,4 +56,5 @@ y
               (list (append (deep-reverse (car items)))))
       items))
 
+;; Test case
 (deep-reverse y)
