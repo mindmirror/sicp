@@ -104,7 +104,35 @@ y
 (balanced? ban-mob)
 (total-weight unban-mob)
 (balanced? unban-mob)
+
+;; Update: a more elegant version from code17
+;; The trick is when balanced? a weight it returns nothing.
+(define mobile? pair?)
+(define (branch-weight branch)
+    (let ((struct (structure branch)))
+      (if (pair? struct)
+          (total-weight struct)
+          struct)))
+
+(define (new-balance mobile)
+  (if (mobile? mobile)
+      (let ((lb (left-branch mobile))
+            (rb (right-branch mobile)))
+        (and (new-balance (structure lb))
+             (new-balance (structure rb))
+             (= (* (branch-length lb) (branch-weight lb))
+                (* (branch-length rb) (branch-weight rb)))))))
+
+;; Test case for new-balance
 (newline)
+(display "Test new-balance")
+(newline)
+(new-balance x)
+(new-balance y)
+(new-balance ban-mob)
+(new-balance unban-mob)
+(newline)
+
 ;; =============================================================================
 
 ;; d.
