@@ -1,5 +1,7 @@
 ;; Exercise 2.36
 
+;; The key is using map and expand the recursive procedure to see the insight.
+
 (define (accumulate op init seq)
   (if (null? seq)
       init
