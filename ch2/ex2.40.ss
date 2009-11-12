@@ -18,6 +18,9 @@
 ;; lists. Otherwise, when append the last item in a list, append will give an
 ;; error saying the itme is not list.
 
+;; Note: flatmap is "map the procedure to the items in the sequnce and then
+;; flattern the list.
+
 ;; Answer to exercise
 ;; =============================================================================
 (define (unique-pairs n)
