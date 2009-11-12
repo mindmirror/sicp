@@ -23,15 +23,14 @@
 (define (unique-pairs n)
   (if (= n 0)
       null
-      (map (lambda (i)
-             (map (lambda (j) (list i j))
-                  (enumerate-interval 1 (- i 1))))
-           (enumerate-interval 1 n))))
+      (flatmap (lambda (i)
+                 (map (lambda (j) (list i j))
+                      (enumerate-interval 1 (- i 1))))
+               (enumerate-interval 1 n))))
 
 ;; Test case
 ;; =============================================================================
 (unique-pairs 5)
-(flatmap identity (unique-pairs 5))
 
 (define (prime? n)
   (define (iter i)
@@ -54,7 +53,7 @@
 (define (prime-sum-pairs n)
   (map make-pair-sum
        (my-filter prime-sum?
-                  (flatmap identity (unique-pairs n)))))
+                  (unique-pairs n))))
 
 (prime-sum-pairs 6)
 
