@@ -2,9 +2,8 @@
 
 ; (car ''abracadabra) =>
 ; (car (quote (quote abracadabra))) =>
-; (car (list 'quote '(quote abracadabra)))
+; (car '(quote abracadabra))
 
-;; As you can see, ''abracadabra is actually a list formed by 'quote and
-;; (quote abracadabra). When `caring' this list, it returns 'quote, and the interpreter
-;; will print a `quote'. When `cdring' it, you will get (quote abracadabra), which is
-;; evaluated from '(quote abracadabra) and the interpreter will print `(abracadabra)'.
+;; As you can see ''abracadabra is actually a list, where quote and abracadabra
+;; are items in the list. When `caring' it, it returns quote; when `cdring' it,
+;; it returns (abracadabra).
