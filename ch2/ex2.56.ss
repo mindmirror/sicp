@@ -16,7 +16,8 @@
         ((exponentiation? exp) ;; derive exponential
          (make-product (make-product (exponent exp)
                                      (make-exponential (base exp)
-                                                       (- (exponent exp) 1)))
+                                                       (make-sub
+                                                        (exponent exp) 1)))
                        (deriv (base exp) var)))
         (else
          (error "unknow expression type -- DERIV" exp))))
@@ -42,6 +43,14 @@
         ((=number? m2 1) m1)
         ((and (number? m1) (number? m2)) (* m1 m2))
         (else (list '* m1 m2))))
+
+(define (make-sub s1 s2)
+  (cond ((and (number? s1) (number? s2)) (- s1 s2))
+        ((=number? s2 0) s1)
+        (else (list '- s1 s2))))
+;; Note: I saw a guy using make-sum instead of writing a new make-sub, it is
+;; quite a smart way to do it. The only side effect is you may have something
+;; like (+ a -1).
 
 (define (sum? x)
   (and (pair? x) (eq? (car x) '+)))
@@ -72,3 +81,4 @@
 (deriv '(+ x 3) 'x)
 (deriv '(* (* x y) (+ x 3)) 'x)
 (deriv '(** x 3) 'x)
+(deriv '(* 3 (** x a)) 'x)
