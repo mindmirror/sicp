@@ -15,12 +15,6 @@
                         (deriv (multiplicand exp) var))
           (make-product (multiplicand exp)
                         (deriv (multiplier exp) var))))
-        ((exponentiation? exp) ;; derive exponential
-         (make-product (make-product (exponent exp)
-                                     (make-exponential (base exp)
-                                                       (make-sub
-                                                        (exponent exp) 1)))
-                       (deriv (base exp) var)))
         (else
          (error "unknow expression type -- DERIV" exp))))
 
@@ -50,14 +44,12 @@
   (cond ((and (number? s1) (number? s2)) (- s1 s2))
         ((=number? s2 0) s1)
         (else (list '- s1 s2))))
-;; Note: I saw a guy using make-sum instead of writing a new make-sub, it is
-;; quite a smart way to do it. The only side effect is you may have something
-;; like (+ a -1).
 
 (define (sum? x)
   (and (pair? x) (eq? (car x) '+)))
 
 (define (addend s) (cadr s))
+;; New augend
 (define (augend s)
   (if (null? (cdddr s))
       (caddr s)
@@ -67,23 +59,11 @@
   (and pair? x) (eq? (car x) '*))
 
 (define (multiplier p) (cadr p))
+;; New multiplicand
 (define (multiplicand p)
   (if (null? (cdddr p))
       (caddr p)
       (cons '* (cddr p))))
 
-;; exponentiation?
-(define (exponentiation? x)
-  (and (pair? x) (eq? (car x) '**)))
-
-;; base & exponent
-(define (base e) (cadr e))
-(define (exponent e) (caddr e))
-
-;; make-exponential
-(define (make-exponential b e)
-  (cond ((=number? e 0) 1)
-        ((=number? e 1) b)
-        (else (list '** b e))))
-
 (deriv '(* x y (+ x 3)) 'x)
+(deriv '(+ x 3 4 (* 2 x 3)) 'x)
