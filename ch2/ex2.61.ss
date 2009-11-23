@@ -1,5 +1,8 @@
 ;; Exercise 2.61
 
+;; Key: If x is bigger than the current item in the list, append the front list and,
+;; the result of (adjoin-set x rest-set).
+
 ;; iterative
 (define (adjoin-set-i x set)
   (define (iter i result)
