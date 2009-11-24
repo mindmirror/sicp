@@ -17,7 +17,7 @@
 
 ;; b.
 ;; Note: this is NOT theta(log(n)) since partial-tree needs to traverse all the
-;; n elements in the list. I made a mistake first time.
+;; n elements in the list. I made a mistake at the first time.
 ;; 
 ;; The order of growth is theta(n).
 ;; The number of steps in partial-tree is only depend on the `n', which is the
