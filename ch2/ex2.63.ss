@@ -16,31 +16,11 @@
 (define (make-tree entry left right)
   (list entry left right))
 
-(define tree1 (make-tree '7
-                          (make-tree '3
-                                     (make-tree '1 '() '())
-                                     (make-tree '5 '() '()))
-                          (make-tree '9
-                                     '()
-                                     (make-tree '11 '() '()))))
+(define tree1 '(7 (3 (1 () ()) (5 () ())) (9 () (11 () ()))))
+(define tree2 '(3 (1 () ()) (7 (5 () ()) (9 () (11 () ())))))
+(define tree3 '(5 (3 (1 () ()) ()) (9 (7 () ()) (11 () ()))))
 tree1
-
-(define tree2 (make-tree '3
-                         (make-tree '1 '() '())
-                         (make-tree '7
-                                    (make-tree '5 '() '())
-                                    (make-tree '9
-                                               '()
-                                               (make-tree '11 '() '())))))
 tree2
-
-(define tree3 (make-tree '5
-                         (make-tree '3
-                                    (make-tree '1 '() '())
-                                    '())
-                         (make-tree '9
-                                    (make-tree '7 '() '())
-                                    (make-tree '11 '() '()))))
 tree3
 
 (define (tree->list-1 tree)
