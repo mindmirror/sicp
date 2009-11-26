@@ -31,6 +31,13 @@
 ;; left, another for right. It is like p(n) -> 2p(n/2) -> 4p(n/4) -> ... until
 ;; n = 0. So the order of growth is theta(n).
 
+;; Update:
+;; We can apply the master theorem to it.
+;; T(1) = Theta(1)
+;; T(n) = 2T((n-1)/2) + Theta(1)
+;;      < 2T(n/2) + Theta(1)
+;;      = Theta(n^log2(2)) = Theta(n)
+
 (define (list->tree elements)
   (car (partial-tree elements (length elements))))
 
