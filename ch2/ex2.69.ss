@@ -44,14 +44,19 @@
 
 ;; iterative
 ;; Key: make the code tree from the lowest weight to highest
+;; Update: cannot simply make-code-tree one leaf by one leaf from the leaf-set,
+;; have to compare the weight between the newly made tree branch and leaf or old
+;; tree branch. Hence we need to adjoin-set to concatenate the new branch and
+;; the old set.
 (define (generate-huffman-tree-i pairs)
   (successive-merge-i (make-leaf-set pairs)))
 (define (successive-merge-i leaf-set)
-  (define (iter set result)
-    (if (null? set)
-        result
-        (iter (cdr set) (make-code-tree (car set) result))))
-  (iter (cdr leaf-set) (car leaf-set)))
+  (define (iter set)
+    (if (null? (cdr set))
+        set
+        (iter (adjoin-set (make-code-tree (car set) (cadr set))
+                          (cddr set)))))
+  (iter leaf-set))
 
 ;; recursive
 ;; Key: make code tree using first two leaf, then using adjoin-set to put it
@@ -65,6 +70,6 @@
        (adjoin-set (make-code-tree (car leaf-set) (cadr leaf-set))
                    (cddr leaf-set)))))
 
-(define test-pairs '((A 4) (B 2) (C 1) (D 1)))
+(define test-pairs '((A 8) (B 3) (C 1) (D 1) (E 1) (F 1) (G 1) (H 1)))
 (generate-huffman-tree-i test-pairs)
 (generate-huffman-tree-r test-pairs)
