@@ -13,9 +13,9 @@
                         (deriv (multiplicand exp) var))
           (make-product (multiplicand exp)
                         (deriv (multiplier exp) var))))
-        ((exponentiation? exp) ;; derive exponential
+        ((exponentiation? exp) ;; derive exponentiation
          (make-product (make-product (exponent exp)
-                                     (make-exponential (base exp)
+                                     (make-exponentiation (base exp)
                                                        (make-sub
                                                         (exponent exp) 1)))
                        (deriv (base exp) var)))
@@ -72,8 +72,8 @@
 (define (base e) (cadr e))
 (define (exponent e) (caddr e))
 
-;; make-exponential
-(define (make-exponential b e)
+;; make-exponentiation
+(define (make-exponentiation b e)
   (cond ((=number? e 0) 1)
         ((=number? e 1) b)
         (else (list '** b e))))
