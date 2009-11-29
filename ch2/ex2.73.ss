@@ -2,9 +2,10 @@
 
 ;; a.
 ;; When derive a number or a variable, we don't need any extra information about
-;; them, but we can get the result directly. However, when we derive other
-;; expressions, i.e. a plus of two varaibles, a multiply of two variables, we
-;; need to know the `type' of operation in order to apply rules on them.
+;; them, but we can get the result directly. We have nothing to dispatch on
+;; them. However, when we derive other expressions, i.e. a plus of two
+;; varaibles, a multiply of two variables, we need to know the `type' of
+;; operation in order to apply rules on them.
 
 ;; b.
 ;;                             Types
@@ -45,37 +46,13 @@
 ;; install-exp-package
 (define (install-exp-package)
   (define (derive exp var)
-    (make-product (exponential exp)
-                  (** (base exp) (make-sub (exponential exp) 1))))
+    (make-product (exponent exp)
+                  (make-product
+                   (make-exponentiation (base exp)
+                                        (make-sum (exponent exp) -1))
+                   (deriv (base exp) var))))
   (put 'derive '(**) derive)
   'done)
 
 ;; d.
-;; In this case, the type is `derive', the operations are add, mul and exp.
-;;
-;;                 Types
-;;
-;;                 derive
-;; Operations   +-----------
-;;              |
-;;     +        | +-derive
-;;     *        | *-derive
-;;     **       | **-derive
-;;              |
-
-(define (install-deriv-package)
-  (define (+-deriv exp var)
-    (make-sum (derive (andend exp) var)
-              (derive (augend exp) var)))
-  (define (*-deriv exp var)
-    (make-sum (make-product (multiplier exp)
-                            (derive (multiplicand exp) var))
-              (make-product (multiplicand exp)
-                            (derive (multiplier exp) var))))
-  (define (**-deriv exp var)
-    (make-product (exponential exp)
-                  (** (base exp) (make-sub (exponential exp) 1))))
-  (put '+ derive +-deriv)
-  (put '* derive *-deriv)
-  (put '** derive **-deriv)
-  'done)
+;; Simply change the order of `op' and `type' in the `put' procedure will do.
