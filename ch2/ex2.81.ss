@@ -7,7 +7,7 @@
 
 ;; b.
 ;; The apply-generic procedure work correctly as is. If the procedure coerces
-;; two arguments of the same type, it means the operation does not exit for
+;; two arguments of the same type, it means the operation does not exist for
 ;; this type. If no coercion is defined for the same type, the procedure will
 ;; report error, and the procedure is terminated. However, if the coercion is
 ;; defined, the procedure will never stop but keep try to find the operation
