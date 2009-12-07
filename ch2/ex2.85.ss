@@ -34,11 +34,22 @@
         x)))
 
 ;; re-write apply-generic using drop
+;; Update: drop operation is not suitable for all operations, for example a
+;; `raise' operation.  Operation like `=zero?' returns a boolean value, which
+;; drop cannot apply to. So we can make a white list for `drop'.
 (define (apply-generic op . args)
   (let ((type-tags (map type-tag args)))
     (let ((proc (get op type-tags)))
       (if proc
-          (apply proc (map contents args))
+          ;; Apply `drop' according to white list
+          (let ((to-drop (or (eq? op 'add)
+                             (eq? op 'sub)
+                             (eq? op 'mul)
+                             (eq? op 'div))))
+            (if to-drop
+                (drop (apply proc (map contents args)))
+                (apply proc (map contents args))))
+          ;; Try coercion if proc not exists
           (if (= (length args) 2)
               (let ((arg1 (car args))
                     (arg2 (cadr args)))
@@ -54,9 +65,9 @@
                           (coerced-arg2 (raise-iter arg2 arg1)))
                       ;; drop the result to simplify the anser
                       (cond ((coerced-arg1)
-                             (drop (apply-generic op (coerced-arg1 arg2))))
+                             (apply-generic op (coerced-arg1 arg2)))
                             ((coerced-arg2)
-                             (drop (apply-generic op (arg1 coerced-arg2))))
+                             (apply-generic op (arg1 coerced-arg2)))
                             (else
                              (error "No method for these types"
                                     (list op type-tags)))))
